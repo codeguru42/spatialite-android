@@ -15,70 +15,97 @@ public class SpatialiteCursor extends AbstractCursor {
 
     @Override
     public String[] getColumnNames() {
-        String[] names = null;
         try {
-            names = new String[getCount()];
+            String[] names = new String[getCount()];
             for (int i = 0; i < names.length; ++i) {
                 names[i] = stmt.column_database_name(i);
             }
-        } catch (jsqlite.Exception e) {
-            Log.e(TAG, e.getMessage(), e);
-        }
 
-        return names;
+            return names;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column names", e);
+        }
     }
 
     @Override
     public int getCount() {
         try {
             return stmt.column_count();
-        } catch (jsqlite.Exception e) {
+        } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column count", e);
         }
-
-        return -1;
     }
 
     @Override
-    public double getDouble(int arg0) {
-        // TODO Auto-generated method stub
-        return 0;
+    public double getDouble(int column) {
+        try {
+            return stmt.column_double(column);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
     @Override
     public float getFloat(int column) {
-        // TODO Auto-generated method stub
-        return 0;
+        try {
+            return (float) stmt.column_double(column);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
     @Override
     public int getInt(int column) {
-        // TODO Auto-generated method stub
-        return 0;
+        try {
+            return stmt.column_int(column);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
     @Override
     public long getLong(int column) {
-        // TODO Auto-generated method stub
-        return 0;
+        try {
+            return stmt.column_long(column);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
     @Override
     public short getShort(int column) {
-        // TODO Auto-generated method stub
-        return 0;
+        try {
+            return (short) stmt.column_int(column);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
     @Override
     public String getString(int column) {
-        // TODO Auto-generated method stub
-        return null;
+        try {
+            return stmt.column_string(column);
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
     @Override
     public boolean isNull(int column) {
-        // TODO Auto-generated method stub
-        return false;
+        try {
+            return stmt.column(column) == null;
+        } catch (Exception e) {
+            Log.e(TAG, e.getMessage(), e);
+            throw new SpatialiteException("Unable to retrieve column value", e);
+        }
     }
 
 }
