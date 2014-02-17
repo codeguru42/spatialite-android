@@ -14,6 +14,11 @@
 bin/
 gen/
 obj/
+libs/
+geos*
+libspatialite*
+proj*
+sqlite-amalgamation*
 
 # Local configuration file (sdk path, etc)
 local.properties
